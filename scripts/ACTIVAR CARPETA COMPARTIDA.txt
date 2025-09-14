@@ -20,6 +20,11 @@ Poswork:
 
 ls /media/
 
+o
+
+ls /mnt/
+mount | grep vboxsf
+
 Deberías ver algo como sf_VMshare (el nombre cambia según lo que configuraste en VirtualBox).
 Si aparece, ya está montada.
 
