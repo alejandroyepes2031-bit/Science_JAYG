@@ -1,0 +1,15 @@
+Descargar VM y Ubuntu iso lts
+Solo el 50% de los recursos del pc y 50 GB almacenamiento dinámico
+Omitir instalación desatendida
+lsb_release -a
+sudo apt install bzip2
+sudo apt update
+sudo apt upgrade
+sudo snap refresh
+sudo apt install dkms 
+sudo apt install virtualbox-dkms 
+sudo apt install linux-headers-generic
+Install guest additions
+reboot
+exit
+Sacar una instantánea

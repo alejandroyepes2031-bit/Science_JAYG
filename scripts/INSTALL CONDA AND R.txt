@@ -1,0 +1,114 @@
+1. Actualizar sistema:
+
+sudo apt update && sudo apt upgrade -y
+
+2. Instalar Python, pip y dependencias básicas: 
+# PIP es el gestor de paquetes estándar para Python, una herramienta que te permite instalar, desinstalar y actualizar fácilmente paquetes o módulos de software para tus proyectos #
+
+sudo apt install -y python3 python3-pip python3-venv build-essential git wget curl
+
+3. Crear un entorno virtual (buena práctica):
+
+# Así mantienes limpio tu sistema #
+
+python3 -m venv ~/bioinfo-env
+source ~/bioinfo-env/bin/activate
+
+# Para salir: deactivate — para volver a entrar: source ~/bioinfo-env/bin/activate #
+
+4. Instalar Jupyter y librerías esenciales
+
+Con el entorno activado:
+
+pip install --upgrade pip
+pip install jupyterlab notebook
+
+# Para abrir Jupyter Lab (Esto abrirá la interfaz en tu navegador): #
+
+jupyter lab
+
+5. Instalar librerías de análisis de datos:
+
+pip install numpy pandas matplotlib seaborn scikit-learn
+
+
+6. Instalar librerías de biología - bioinformática
+
+# Estas son las que vamos a usar en los notebooks: #
+
+pip install biopython
+pip install scikit-bio
+
+7. Instalar R y R kernel para Jupyter (opcional pero muy útil):
+
+sudo apt update
+sudo apt install -y libtirpc-dev libssl-dev libxml2-dev libcurl4-openssl-dev
+sudo apt install -y r-base
+pip install jupyter rpy2
+
+# Agregar kernel de R: #
+
+a) Crear carpeta de librerías R en tu usuario:
+
+mkdir -p ~/R/libs
+
+# Esto crea ~/R/libs donde R podrá instalar paquetes sin pedir permisos de root #
+
+b) Usar esa carpeta en la sesión actual (temporal):
+
+# Esto hace que R use la carpeta recién creada en esta sesión de terminal: #
+
+export R_LIBS_USER=~/R/libs
+
+# Si quieres verificar: #
+
+echo $R_LIBS_USER
+
+c) Hacer permanente la carpeta para futuras sesiones:
+
+# Agrega la variable a ~/.Renviron (R la lee siempre al iniciar): #
+
+echo "R_LIBS_USER='${HOME}/R/libs'" >> ~/.Renviron
+
+# (Alternativa: si prefieres ponerlo en ~/.bashrc también funciona, pero ~/.Renviron es el sitio apropiado para variables de R.) #
+
+d) Instalar IRkernel usando Rscript y la librería del user:
+
+# Con Rscript evitamos abrir la consola interactiva y especificamos explícitamente lib: #
+
+Rscript -e 'if(!dir.exists(Sys.getenv("R_LIBS_USER"))) dir.create(Sys.getenv("R_LIBS_USER"), recursive=TRUE); install.packages("IRkernel", repos="https://cloud.r-project.org", lib=Sys.getenv("R_LIBS_USER"))'
+
+# Esto: comprueba/crea la carpeta, y luego instala IRkernel en ~/R/libs #
+
+# Si te pide seleccionar un CRAN mirror, la URL cloud.r-project.org evita ese prompt #
+
+e) Registrar el kernel R en Jupyter (solo para tu usuario):
+
+Rscript -e 'library(IRkernel); IRkernel::installspec(user = TRUE)'
+
+# Esto crea la especificación del kernel en ~/.local/share/jupyter/kernels/... y Jupyter podrá detectarlo #
+
+f) Verificar que Jupyter reconoce el kernel:
+
+# En la terminal (dentro de tu entorno Python donde está Jupyter): #
+
+jupyter kernelspec list
+
+# Deberías ver una línea similar a:
+
+  ir        /home/tuusuario/.local/share/jupyter/kernels/ir
+  python3   /.../...
+
+Si aparece ir (o ir-4.x), ¡listo! #
+
+# Luego puedes correr Jupyter Lab/Notebook: #
+
+jupyter lab
+# o
+jupyter notebook
+
+# Al crear un nuevo notebook deberías poder elegir "R" como kernel #
+
+8. Instalar herramientas de línea de comando básicas en bioinformática:
+
+sudo apt install -y fastqc bowtie2 samtools

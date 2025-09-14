@@ -1,0 +1,46 @@
+Prework
+
+Apaga tu VM Ubuntu.
+
+En VirtualBox, selecciona tu VM → Configuración → Carpetas compartidas.
+
+Haz clic en + (Agregar nueva carpeta compartida).
+
+Carpeta en tu host (Windows): selecciona la que contiene bioedu-resources.
+
+Nombre de carpeta: por ejemplo VMshare.
+
+Marca Automontar y Acceso completo.
+
+Arranca de nuevo tu VM.
+
+Poswork:
+
+1. En tu VM Ubuntu abre la terminal y escribe:
+
+ls /media/
+
+Deberías ver algo como sf_VMshare (el nombre cambia según lo que configuraste en VirtualBox).
+Si aparece, ya está montada.
+
+2. Agrega tu usuario al grupo vboxsf
+
+Por defecto, VirtualBox crea el grupo especial vboxsf para manejar las carpetas compartidas.
+Debes añadir tu usuario a ese grupo:
+
+sudo usermod -aG vboxsf $USER
+
+3. Reinicia la VM
+
+Esto es importante: el cambio de grupos solo se aplica cuando reinicias sesión.
+
+Apaga y vuelve a encender la máquina virtual.
+
+
+4. Verifica que tienes acceso
+
+Al volver a entrar, prueba con:
+
+ls -l /media/sf_VMshare
+
+Si ya ves los archivos, ahora deberías poder leer y escribir dentro de esa carpeta.

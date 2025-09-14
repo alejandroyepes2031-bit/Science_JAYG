@@ -1,0 +1,7 @@
+1. Activar environment
+
+source ~/bioinfo-env/bin/activate
+
+2. Run
+
+jupyter lab
